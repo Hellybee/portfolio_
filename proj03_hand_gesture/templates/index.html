@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웹캠 스트리밍</title>
+    <style>
+        * {
+            margin: 0 auto;
+        }
+
+        body {
+            margin: 0 auto;
+        }
+
+        .content_ {
+            justify-content: center;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #webdata {
+            display: none;
+        }
+
+        #video_ {
+            display: none;
+        }
+
+        #team_name {
+            width: 640px;
+            height: 480px;
+            background-color: #FFE3EE;
+            text-align: center;
+        }
+
+        .btn_click {
+            justify-content: center;
+            display: flex;
+        }
+
+        #btn {
+            display: inline-block;
+            width: 640px;
+            height: 100px;
+            background-color: #FFDCE1;
+            border: 3px solid #FFF0F5;
+            color: aliceblue;
+            margin: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content_">
+        <h1 class="content_">웹캠 스트리밍</h1>
+        <div class="content_" id="webdata">{{data}}</div>
+        <div class="btn_click content_">
+            <input type="button" value="시작하기" id="btn" class="btn_click content_">
+        </div>
+        <div id="team_name">손 동작 인식</div>
+        <img id="video_" src="{{ url_for('video_feed') }}" alt="Video Feed">
+    </div>
+    <script>
+
+        document.getElementById('btn').addEventListener('click', () => {
+            document.getElementById('team_name').style.display = 'none';
+            document.getElementById('video_').style.display = 'block';
+        });
+
+
+        function testfunc() {
+            const data_ = fetch("/update");
+            return data_.then((response) => response.json())
+        }
+
+        async function exec(params) {
+            const test_data = await testfunc();
+            console.log(test_data)
+        }
+
+
+
+
+        // function update_data() {
+        //     fetch('/update')
+        //     .then((response) => {
+        //         if (!response.ok) {
+        //             throw new Error('네트워크 응답이 좋지 않습니다');
+        //         }
+        //         return response.json(); // JSON 데이터를 반환하는 Promise
+        //     })
+        //     .then((result) => {
+        //         console.log(`결과 :  `, JSON.stringify(result, null, 2)); // 여기서 결과 값을 사용할 수 있습니다
+        //         document.getElementById('webdata').textContent = JSON.stringify(result, null, 2)['status'];
+        //     })
+        //     .catch((error) => {
+        //         console.error('오류:', error); // 오류 처리
+        //     });
+        // }
+
+        // setInterval(update_data, 1000);
+
+    </script>
+</body>
+
+</html>
